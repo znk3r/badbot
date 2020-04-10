@@ -1,0 +1,21 @@
+
+---
+project_name: badbot
+
+release:
+  github:
+    owner: znk3r
+    name: badbot
+
+builds:
+  - main : ./main.go
+    binary: badbot
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+    ldflags: -X main.Version={{.Version}} -X main.GitTag={{.Tag}} -X main.BuildDate={{.Date}}
+    env:
+      - CGO_ENABLED=0
