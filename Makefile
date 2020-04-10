@@ -8,7 +8,7 @@ CGO_ENABLED = 0
 GO := GO111MODULE=on go
 GO_NOMOD :=GO111MODULE=off go
 BUILD_DATE := $(shell date --rfc-3339=seconds | sed 's/ /T/')
-LDFLAGS := '-w -s -X main.Version=Dev -X main.GitTag=$(GIT_TAG) -X main.BuildDate=$(BUILD_DATE)'
+LDFLAGS := '-w -s -X github.com/znk3r/badbot/cmd.Version=Dev -X github.com/znk3r/badbot/cmd.GitTag=$(GIT_TAG) -X github.com/znk3r/badbot/cmd.BuildDate=$(BUILD_DATE)'
 COVER_OUT = coverage.out
 COVER_HTML = coverage.html
 

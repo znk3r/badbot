@@ -1,0 +1,5 @@
+discord:
+  auth_token: PUT_HERE_YOUR_DISCORD_BOT_TOKEN
+
+server:
+  port: 8080

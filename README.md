@@ -1,6 +1,12 @@
 # badbot
 Discord bot to add music to online table rpg
 
+## How to connect the bot to Discord?
+
+Using the bot requires some set up. You are running your own bot, so you'll need your own Discord Bot Token. Here are a couple of resources of how you can set everything up:
+
+- https://www.writebots.com/discord-bot-token/
+
 ## Dev
 
 ### How to build?
