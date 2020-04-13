@@ -36,10 +36,18 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "run in debug mode (slower)")
+	rootCmd.PersistentFlags().StringP("db", "d", "data.db", "SQLite file to use as database")
 	rootCmd.PersistentFlags().StringP("port", "p", "8080", "port for the webserver")
+	rootCmd.PersistentFlags().Int("write_timeout", 15, "webserver write timeout")
+	rootCmd.PersistentFlags().Int("read_timeout", 15, "webserver read timeout")
+	rootCmd.PersistentFlags().Int("idle_timeout", 60, "webserver idle timeout")
 	rootCmd.PersistentFlags().StringP("token", "t", "", "discord authentication token")
 	viper.BindPFlag("debug", rootCmd.PersistentFlags().Lookup("verbose"))
+	viper.BindPFlag("db.file", rootCmd.PersistentFlags().Lookup("db"))
 	viper.BindPFlag("server.port", rootCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("server.write_timeout", rootCmd.PersistentFlags().Lookup("write_timeout"))
+	viper.BindPFlag("server.read_timeout", rootCmd.PersistentFlags().Lookup("read_timeout"))
+	viper.BindPFlag("server.idle_timeout", rootCmd.PersistentFlags().Lookup("idle_timeout"))
 	viper.BindPFlag("discord.auth_token", rootCmd.PersistentFlags().Lookup("token"))
 }
 

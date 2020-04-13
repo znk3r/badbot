@@ -1,5 +1,33 @@
+db:
+  # You can use this option to override the default file used
+  # as SQLite3 database.
+  #
+  #file: my-database.db
+
 discord:
   auth_token: PUT_HERE_YOUR_DISCORD_BOT_TOKEN
 
 server:
-  port: 8080
+  # You can use this option to override the default port for 
+  # the API communicating the browser client to this server.
+  #
+  #port: 8080
+
+  # maximum duration in seconds for reading the entire 
+  # request, including the body.
+  #
+  #read_timeout: 15
+
+  # maximum duration in seconds before timing out writes of
+  # the response. It is reset whenever a new request's 
+  # header is read.
+  #
+  #write_timeout: 15
+
+  # maximum amount of seconds to wait for the next request 
+  # when keep-alives are enabled. If IdleTimeout is zero, 
+  # the value of read_timeout is used. If both are zero, 
+  # there is no timeout.
+  #
+  #idle_timeout: 60
+
