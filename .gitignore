@@ -15,3 +15,7 @@ badbot
 # Default config files
 config.json
 config.yaml
+
+# Don't commit any sqlite db
+*.db
+*.sqlite3
