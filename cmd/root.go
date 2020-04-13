@@ -19,7 +19,7 @@ var rootCmd = &cobra.Command{
 allows you to have a tagged music library to play background music
 during online table RPG sessions.`),
 	Version: Version,
-	Run: serverHandler,
+	Run:     serverHandler,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -78,7 +78,7 @@ func initConfig() {
 
 func selectDefaultConfigFile() string {
 	filenames := [...]string{"config.yaml", "config.yml", "config.json"}
-	
+
 	for _, file := range filenames {
 		if _, err := os.Stat(file); !os.IsNotExist(err) {
 			return file
