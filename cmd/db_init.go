@@ -5,12 +5,11 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/znk3r/badbot/pkg/db"
-	"github.com/znk3r/badbot/pkg/model"
 )
 
 // dbInitCmd represents the db:init command
 var dbInitCmd = &cobra.Command{
-	Use:        "db:init -d database-file.db",
+	Use:        "db:init",
 	Aliases:    []string{"db:new", "db:migrate"},
 	SuggestFor: []string{"db"},
 	Short:      "Create or update the database",
@@ -49,14 +48,8 @@ func dbInitHandler(cmd *cobra.Command, args []string) {
 	log.Infof("Using database: %s", file)
 
 	conn := db.Connect(file)
+	defer conn.Disconnect()
 
-	defer db.Disconnect(conn)
-
-	conn.AutoMigrate(
-		&model.Song{},
-		&model.Playlist{},
-		&model.Tag{},
-	)
-
+	conn.MigrateDatabase()
 	log.Infof("Database %s updated", file)
 }
