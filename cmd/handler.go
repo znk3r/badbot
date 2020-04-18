@@ -1,11 +1,9 @@
 package cmd
 
 import (
-	"context"
 	goSql "database/sql"
 	"fmt"
 	"math"
-	"net/http"
 	"os"
 	"os/signal"
 	"time"
@@ -13,14 +11,15 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/znk3r/badbot/pkg/api"
+
+	// "github.com/znk3r/badbot/pkg/api"
 	"github.com/znk3r/badbot/pkg/sql"
 	// "github.com/znk3r/badbot/pkg/discord"
 )
 
 func serverHandler(cmd *cobra.Command, args []string) {
 	startDB()
-	srv := startServer()
+	// srv := startServer()
 
 	// Handle Shutdown
 	c := make(chan os.Signal, 1)
@@ -28,16 +27,17 @@ func serverHandler(cmd *cobra.Command, args []string) {
 	// SIGKILL, SIGQUIT or SIGTERM (Ctrl+/) will not be caught.
 	signal.Notify(c, os.Interrupt)
 	// Block until we receive our signal.
+	fmt.Printf(`Temporal print. Press CTRL-C to exit.` + "\n\n")
 	<-c
 	fmt.Print("\n")
 
 	// Create a deadline to wait for.
-	ctx, cancel := context.WithTimeout(context.Background(), serverTimeout())
-	defer cancel()
+	// ctx, cancel := context.WithTimeout(context.Background(), serverTimeout())
+	// defer cancel()
 	// Doesn't block if no connections, but will otherwise wait
 	// until the timeout deadline.
 	log.Debug("Shutting down web server")
-	srv.Shutdown(ctx)
+	// srv.Shutdown(ctx)
 
 	log.Info("Shutting down")
 }
@@ -55,39 +55,39 @@ func startDB() *goSql.DB {
 	return db
 }
 
-func startServer() *http.Server {
-	port := viper.GetString("server.port")
-	writeTimeout := viper.GetInt("server.write_timeout")
-	readTimeout := viper.GetInt("server.read_timeout")
-	idleTimeout := viper.GetInt("server.idle_timeout")
+// func startServer() *http.Server {
+// 	port := viper.GetString("server.port")
+// 	writeTimeout := viper.GetInt("server.write_timeout")
+// 	readTimeout := viper.GetInt("server.read_timeout")
+// 	idleTimeout := viper.GetInt("server.idle_timeout")
 
-	router := api.CreateRoutes()
+// 	// router := api.CreateRoutes()
 
-	srv := &http.Server{
-		Addr: ":" + port,
-		// Good practice to set timeouts to avoid Slowloris attacks.
-		WriteTimeout: time.Second * time.Duration(writeTimeout),
-		ReadTimeout:  time.Second * time.Duration(readTimeout),
-		IdleTimeout:  time.Second * time.Duration(idleTimeout),
-		Handler:      router,
-	}
+// 	srv := &http.Server{
+// 		Addr: ":" + port,
+// 		// Good practice to set timeouts to avoid Slowloris attacks.
+// 		WriteTimeout: time.Second * time.Duration(writeTimeout),
+// 		ReadTimeout:  time.Second * time.Duration(readTimeout),
+// 		IdleTimeout:  time.Second * time.Duration(idleTimeout),
+// 		Handler:      router,
+// 	}
 
-	fmt.Printf(`
-API server running. You can now connect with your browser to
+// 	fmt.Printf(`
+// API server running. You can now connect with your browser to
 
-	Local: http://localhost:%s
+// 	Local: http://localhost:%s
 
-Now running. Press CTRL-C to exit.`+"\n\n", port)
+// Now running. Press CTRL-C to exit.`+"\n\n", port)
 
-	// Run our server in a goroutine so that it doesn't block.
-	go func() {
-		if err := srv.ListenAndServe(); err != nil {
-			log.WithError(err).Fatal("Error running the web server")
-		}
-	}()
+// 	// Run our server in a goroutine so that it doesn't block.
+// 	go func() {
+// 		if err := srv.ListenAndServe(); err != nil {
+// 			log.WithError(err).Fatal("Error running the web server")
+// 		}
+// 	}()
 
-	return srv
-}
+// 	return srv
+// }
 
 func serverTimeout() time.Duration {
 	writeTimeout := viper.GetInt("server.write_timeout")
