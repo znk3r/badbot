@@ -12,6 +12,9 @@ badbot
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Visual Studio Code
+.vscode
+
 # Default config files
 config.json
 config.yaml
